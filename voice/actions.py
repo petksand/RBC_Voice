@@ -73,13 +73,15 @@ class ActionViewStory(Action):
             say(dispatcher, "Could not recognize issue ID")
         else:
             def _run():
-            say(dispatcher, "Viewing issue {}".format(story_id))
+
+                say(dispatcher, "Viewing issue {}".format(story_id))
             try:
                 browser.open_issue(story_id)
             except:
                 pass
 
         asyncio.get_event_loop().run_in_executor(None, _run)
+        browser.open_issue(story_id)
 
 
 class ActionChangeProgress(Action):
@@ -91,12 +93,20 @@ class ActionChangeProgress(Action):
     def run(self, dispatcher, tracker, domain):
         story_id = tracker.get_slot('story_id')
         workflow = tracker.get_slot('workflow')
-        if story_id == None:
+        if story_id is None:
             say(dispatcher, "Could not recognize issue ID")
-        elif workflow == None:
+        elif workflow is None:
             say(dispatcher, "Could not recognize workflow")
         else:
             say(dispatcher, "Changing issue {} to be {}".format(story_id, workflow))
+            def _run():
+                try:
+                    browser.transition_issue(story_id, workflow)
+                except:
+                    pass
+
+            asyncio.get_event_loop().run_in_executor(None, _run)
+
 
 
 class ActionCreateStory(Action):
@@ -165,6 +175,7 @@ class ActionAssign(Action):
             say(dispatcher, "Could not recognize name")
         else:
             say(dispatcher, "Assigning issue {} to {}".format(story_id, names))
+
             def _run():
                 try:
                     browser.assign_issue_to_user(story_id, names)
@@ -192,8 +203,9 @@ class ActionCloseWindow(Action):
 
     def run(self, dispatcher, tracker, domain):
         say(dispatcher, "Closing window")
-            def _run():
-                try:
-                    browser.close_issue_view()
-                except:
-                    pass
+
+        def _run():
+            try:
+                browser.close_issue_view()
+            except:
+                pass
