@@ -12,6 +12,8 @@ from selenium import webdriver
 import selenium_client
 import threading
 
+import asyncio
+
 browser = selenium_client.SeleniumClient()
 
 
@@ -22,15 +24,29 @@ class ActionStartMeeting(Action):
         return "action_start"
 
     def run(self, dispatcher, tracker, domain):
+
         def _run():
             say(dispatcher, "Welcome")
             try:
-                browser.login("petksand@gmail.com", "Password1")
-                browser.navigate_to_active_sprint_board("WHLNT")
+                browser.login()
+                browser.navigate_to_active_sprint_board()
+                browser.login()
             except:
                 pass
-        thread = threading.Thread(target=_run)
-        thread.run()
+
+        asyncio.get_event_loop().run_in_executor(None, _run)
+
+
+class ActionOpenBoard(Action):
+
+    def name(self):
+        return "action_open_board"
+
+    def run(self, dispatcher, tracke, domain):
+        say(dispatcher, "Navigating to board")
+        browser.navigate_to_active_sprint_board()
+
+        return []
 
 
 class ActionPrompt(Action):
@@ -45,7 +61,7 @@ class ActionPrompt(Action):
 
 class ActionViewStory(Action):
     """ Views story """
-    
+
     def name(self):
         return "action_view_story"
 
@@ -54,8 +70,18 @@ class ActionViewStory(Action):
         if story_id == None:
             say(dispatcher, "Could not recognize issue ID")
         else:
-            say(dispatcher, "Viewing issue {}".format(story_id))
-        
+            def _run():
+
+                say(dispatcher, "Viewing issue {}".format(story_id))
+            try:
+                browser.open_issue(story_id)
+            except:
+                pass
+
+        asyncio.get_event_loop().run_in_executor(None, _run)
+        browser.open_issue(story_id)
+
+
 class ActionChangeProgress(Action):
     """ Changes issue progress """
 
@@ -65,9 +91,9 @@ class ActionChangeProgress(Action):
     def run(self, dispatcher, tracker, domain):
         story_id = tracker.get_slot('story_id')
         workflow = tracker.get_slot('workflow')
-        if story_id == None:
+        if story_id is None:
             say(dispatcher, "Could not recognize issue ID")
-        elif workflow == None:
+        elif workflow is None:
             say(dispatcher, "Could not recognize workflow")
         else:
             say(dispatcher, "Changing issue {} to be {}".format(story_id, workflow))
@@ -130,14 +156,23 @@ class ActionAssign(Action):
         return "action_assign"
 
     def run(self, dispatcher, tracker, domain):
+
         names = tracker.get_slot("names")
         story_id = tracker.get_slot("story_id")
-        if story_id == None:
+        if story_id is None:
             say(dispatcher, "Could not recognize story ID")
-        elif names == None:
+        elif names is None:
             say(dispatcher, "Could not recognize name")
         else:
             say(dispatcher, "Assigning issue {} to {}".format(story_id, names))
+
+            def _run():
+                try:
+                    browser.assign_issue_to_user(story_id, names)
+                except:
+                    pass
+
+            asyncio.get_event_loop().run_in_executor(None, _run)
 
 
 class ActionEnd(Action):
@@ -149,3 +184,18 @@ class ActionEnd(Action):
         say(dispatcher, "Quitting web browser")
         browser.end()
         return []
+
+
+class ActionCloseWindow(Action):
+
+    def name(self):
+        return "action_close_window"
+
+    def run(self, dispatcher, tracker, domain):
+        say(dispatcher, "Closing window")
+
+        def _run():
+            try:
+                browser.close_issue_view()
+            except:
+                pass

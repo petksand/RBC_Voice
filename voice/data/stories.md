@@ -1,7 +1,12 @@
 ## start_meeting
 * start
   - action_start
+  - action_open_board
   - action_prompt
+
+## close_window
+* close_issue
+  - action_close_window
 
 ## view_story
 * inform_story{"story_id":null}

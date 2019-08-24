@@ -9,6 +9,8 @@ pytest = "*"
 [packages]
 rasa = "*"
 python-dotenv = "*"
+jira = "*"
+selenium = "*"
 
 [requires]
 python_version = "3.7"

@@ -39,3 +39,4 @@ actions:
 - action_summarize
 - action_assign
 - action_end
+- action_open_board

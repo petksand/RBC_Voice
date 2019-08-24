@@ -8,6 +8,11 @@
 - let's get started
 - let's start
 - let's go
+- start
+- begin
+- begin session
+- start session
+- initiate automated scrum session
 
 ## intent:inform_story
 - look at story [1](story_id)
@@ -82,6 +87,8 @@
 - of course
 - that sounds good
 - correct
+- absolutely
+- yuh
 
 ## intent:deny
 - no
@@ -91,11 +98,17 @@
 - no way
 - not really
 
+## intent:close_issue
+- close this
+- close the window
+- view the board again
+- back to the board
 
 ## intent:end
 - goodbye
 - end
 - over
+- stop
 - restart
 
 ## intent:check_balance
@@ -115,4 +128,4 @@
 - goodbye
 - see you around
 - see you later
-- 
+- goodnight
