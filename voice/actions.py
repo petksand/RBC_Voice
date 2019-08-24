@@ -73,7 +73,6 @@ class ActionViewStory(Action):
             say(dispatcher, "Could not recognize issue ID")
         else:
             def _run():
-
                 say(dispatcher, "Viewing issue {}".format(story_id))
             try:
                 browser.open_issue_view(story_id)
@@ -81,7 +80,6 @@ class ActionViewStory(Action):
                 pass
 
         asyncio.get_event_loop().run_in_executor(None, _run)
-        browser.open_issue_view(story_id)
 
 
 class ActionChangeProgress(Action):

@@ -92,3 +92,7 @@ class SeleniumClient:
 
         self._jira.transition_issue(issue_key, to_status)
         self._driver.refresh()
+
+
+    def end(self):
+        self._driver.quit()
