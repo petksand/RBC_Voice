@@ -90,12 +90,9 @@ def build_similarity_matrix(sentences, stop_words):
     return similarity_matrix
 
 # Generate Summary Method
-def generate_summary(file_name, top_n=5):
+def generate_summary(sentences, top_n=5):
     stop_words = stopwords.words('english')
     summarize_text = []
-
-    # Step 1 - Read text anc split it
-    sentences = read_article(file_name)
 
     # Step 2 - Generate Similary Martix across sentences
     sentence_similarity_martix = build_similarity_matrix(sentences, stop_words)
@@ -118,5 +115,5 @@ def generate_summary(file_name, top_n=5):
     print("Done!")
 
 # Generate Summary Method
-cwd = os.getcwd()
-generate_summary(cwd + "\\sample-wiki.txt", 5)
+# cwd = os.getcwd()
+# generate_summary(cwd + "\\sample-wiki.txt", 5)
