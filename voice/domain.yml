@@ -1,24 +1,3 @@
-slots:
-  story_id:
-    type: text
-  workflow:
-    type: categorical
-    values:
-    - backlog
-    - to do
-    - in progress
-    - done
-  summary:
-    type: text
-  names:
-    type: text
-
-entities:
-- story_id
-- workflow
-- summary
-- names
-
 intents:
 - start
 - inform_story
@@ -28,7 +7,29 @@ intents:
 - summarize
 - assign
 - end
-
+- close_issue
+- risk
+- deny
+- confirm
+entities:
+- story_id
+- workflow
+- summary
+- names
+slots:
+  names:
+    type: text
+  story_id:
+    type: text
+  summary:
+    type: text
+  workflow:
+    type: categorical
+    values:
+    - backlog
+    - to do
+    - in progress
+    - done
 actions:
 - action_start
 - action_view_story

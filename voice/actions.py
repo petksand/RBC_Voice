@@ -106,10 +106,12 @@ class ActionCreateStory(Action):
 
     def run(self, dispatcher, tracker, domain):
         summary = tracker.get_slot("summary")
-        if summary == None:
+        if summary is None:
             say(dispatcher, "Could not recognize summary")
         else:
             say(dispatcher, "Creating new story: {}".format(summary))
+            iss_num = browser.create_story(summary)
+            say(dispatcher, f"Alright! story {iss_num} is created.")
 
 
 class ActionCreateSubtask(Action):

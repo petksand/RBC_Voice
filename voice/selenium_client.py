@@ -96,3 +96,13 @@ class SeleniumClient:
 
     def end(self):
         self._driver.quit()
+
+    def create_story(self, summary: str) -> int:
+        iss = self._jira.create_issue({
+            "project": {"key": settings.JIRA_PROJECT_KEY},
+            "issuetype": {"name": "Story"},
+            "summary": summary,
+            "description": ""
+        })
+        number = iss.key.replace(f"{settings.JIRA_PROJECT_KEY}-", "")
+        return number
