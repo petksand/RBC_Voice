@@ -3,6 +3,8 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 
+import settings
+
 
 class SeleniumClient:
     _driver: WebDriver
@@ -10,18 +12,18 @@ class SeleniumClient:
     def __init__(self):
         self._driver = webdriver.Chrome()
 
-    def login(self, email, password):
-        self._driver.get("https://whole-note.atlassian.net/login")
+    def login(self):
+        self._driver.get("https://id.atlassian.com/login")
 
         el_user = self._driver.find_element_by_id("username")
         el_user.clear()
-        el_user.send_keys(email)
+        el_user.send_keys(settings.JIRA_USERNAME)
 
         el_btn = self._driver.find_element_by_id("login-submit")
         el_btn.click()
         time.sleep(1)
         el_pass = self._driver.find_element_by_id("password")
-        el_pass.send_keys(password)
+        el_pass.send_keys(settings.JIRA_PASSWORD)
 
         el_btn.click()
 
@@ -33,4 +35,6 @@ class SeleniumClient:
         )
 
     def open_issue(self, issue_key: str):
-        pass
+        self._driver.get(
+            f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}&modal=detail&selectedIssue={issue_key}"
+        )
