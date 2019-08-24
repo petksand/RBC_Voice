@@ -25,13 +25,17 @@
 - summarize subtask [3](story_id)
 
 ## intent:assign
-- assign [Poulad](name) to issue [67](story_id)
-- assign [Sandra](name) to subtask [987](story_id)
-- assign [Joe](name) to story [67](story_id)
-- assign [Matt](name) to [456](story_id)
+- assign [Poulad](names) to issue [67](story_id)
+- assign [Sandra Petkovic](names) to subtask [987](story_id)
+- assign [Joe](names) to story [67](story_id)
+- assign [Matt](names) to [456](story_id)
+- assign issue [90](story_id) to [Joe](names)
+- assign [567](story_id) to [Margaret](names)
+- assign story [345678](story_id) to [Bill Mosely](names)
+- assign subtask [6](story_id) to [Parth Smith](names)
 
-## lookup:name
-../names.txt
+<!-- ## lookup:names
+../names.txt -->
 
 
 
