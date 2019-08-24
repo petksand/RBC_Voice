@@ -12,6 +12,7 @@ python-dotenv = "*"
 selenium = "*"
 pocketsphinx = "*"
 flask = "*"
+speechrecognition = "*"
 
 [requires]
 python_version = "3.7"
