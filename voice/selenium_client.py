@@ -59,13 +59,16 @@ class SeleniumClient:
         self._driver.get(
             f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}&modal=detail&selectedIssue={issue_key}"
         )
-        time.sleep(4)
-        # close window after 4 seconds
-        close_btn = self._driver.find_element_by_xpath('//span[@aria-label="Close"]')
-
+        # if close:
+        #     time.sleep(4)
+        #     # close window after 4 seconds
+        #     close_btn = self._driver.find_element_by_xpath('//span[@aria-label="Close"]')
 
 
     def assign_issue_to_user(self, issue_key: str, username: str):
+        # open issue if not already open
+        if not self._driver.find_element_by_xpath('//span[@class="css-eaycls"][text()="{}-{}"]'.format(settings.JIRA_PROJECT_KEY, issue_key)):
+            self.open_issue(issue_key, close=False)
         # assign given issue to given user
         prj = self._jira.project(settings.JIRA_PROJECT_KEY)
         users = self._jira.search_users(username)
@@ -77,3 +80,8 @@ class SeleniumClient:
 
         self._jira.assign_issue(issue_key, u.name)
         self._driver.refresh()
+
+        # time.sleep(4)
+        # # close window after 4 seconds
+        # close_btn = self._driver.find_element_by_xpath('//span[@aria-label="Close"]')
+

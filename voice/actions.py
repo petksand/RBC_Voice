@@ -154,6 +154,7 @@ class ActionAssign(Action):
         return "action_assign"
 
     def run(self, dispatcher, tracker, domain):
+
         names = tracker.get_slot("names")
         story_id = tracker.get_slot("story_id")
         if story_id is None:
@@ -162,7 +163,13 @@ class ActionAssign(Action):
             say(dispatcher, "Could not recognize name")
         else:
             say(dispatcher, "Assigning issue {} to {}".format(story_id, names))
-            browser.assign_issue_to_user(story_id, names)
+            def _run():
+                try:
+                    browser.assign_issue_to_user(story_id, names)
+                except:
+                    pass
+
+            asyncio.get_event_loop().run_in_executor(None, _run)
 
 
 class ActionEnd(Action):
@@ -174,3 +181,18 @@ class ActionEnd(Action):
         say(dispatcher, "Quitting web browser")
         browser.end()
         return []
+
+
+class ActionCloseWindow(Action):
+
+    def name(self):
+        return "action_close_window"
+
+    def run(self, dispatcher, tracker, domain):
+        say(dispatcher, "Closing window")
+            def _run():
+                try:
+                    browser.close_issue_view()
+                except:
+                    pass
+                    

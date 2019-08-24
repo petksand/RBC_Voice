@@ -98,6 +98,11 @@
 - no way
 - not really
 
+## intent:close_issue
+- close this
+- close the window
+- view the board again
+- back to the board
 
 ## intent:end
 - goodbye
