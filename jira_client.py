@@ -2,14 +2,16 @@ from typing import List, Optional
 
 from jira import JIRA, Issue
 
+import settings
+
 
 class JiraClient:
     _client: JIRA
 
     def __init__(self):
         self._client = JIRA(
-            server='https://whole-note.atlassian.net',
-            basic_auth=('poulad3@outlook.com', 'lalV0HEwmH0ehG1GaQGG6748')
+            server=settings.JIRA_BASE_URL,
+            basic_auth=(settings.JIRA_USERNAME, settings.JIRA_TOKEN)
         )
 
     def get_subtasks_for_story(self, issue_key: str) -> Optional[List[Issue]]:
