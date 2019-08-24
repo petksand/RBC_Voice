@@ -1,6 +1,6 @@
 import time
 
-from jira import JIRA
+from jira import JIRA, User
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 
@@ -13,7 +13,7 @@ class SeleniumClient:
 
     def __init__(self):
         self._driver = webdriver.Chrome()
-        _jira = JIRA(server=settings.JIRA_BASE_URL, basic_auth=(settings.JIRA_USERNAME, settings.JIRA_TOKEN))
+        self._jira = JIRA(server=settings.JIRA_BASE_URL, basic_auth=(settings.JIRA_USERNAME, settings.JIRA_TOKEN))
 
     def login(self):
         self._driver.get("https://id.atlassian.com/login")
@@ -44,4 +44,12 @@ class SeleniumClient:
 
     def assign_issue_to_user(self, issue_key: str, username: str):
         prj = self._jira.project(settings.JIRA_PROJECT_KEY)
-        return prj
+        users = self._jira.search_users(username)
+        u: User
+        if len(users) == 1:
+            u = users[0]
+        else:
+            raise ValueError("Too many users!")
+
+        self._jira.assign_issue(issue_key, u.name)
+        self._driver.refresh()
