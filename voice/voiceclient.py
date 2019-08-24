@@ -22,8 +22,7 @@ class VoiceClient:
         self.runner: Optional[threading.Thread] = None
 
     def _send_speech_text(self, message: str):
-        print('sending speech')
-        resp = requests.get(self.url, data={
+        resp = requests.post(self.url, json={
             'sender': self.sender_name,
             'message': message
         })
@@ -41,22 +40,22 @@ class VoiceClient:
         """
         self.is_running = True
 
-        def _run(_self: VoiceClient):
-            recog = sr.Recognizer()
-            while _self.is_running:
-                with sr.Microphone() as source:
-                    logging.info('Recording voice...')
-                    audio = recog.listen(source=source)
-                    logging.info('Recorded voice.')
-                try:
-                    recorded: str = recog.recognize_google(audio)
-                    logging.info('Recorded: ' + recorded)
-                    _self._send_speech_text(recorded)
-                    return recorded
-                except Exception as e:
-                    logging.info(e)
-        self.runner = threading.Thread(target=_run, args=[self])
-        self.runner.run()
+        # def _run(_self: VoiceClient):
+        recog = sr.Recognizer()
+        while self.is_running:
+            with sr.Microphone() as source:
+                logging.info('Recording voice...')
+                audio = recog.listen(source=source)
+                logging.info('Recorded voice.')
+            try:
+                recorded: str = recog.recognize_google(audio)
+                logging.info('Recorded: ' + recorded)
+                self._send_speech_text(recorded)
+                return recorded
+            except Exception as e:
+                logging.info(e)
+        # self.runner = threading.Thread(target=_run, args=[self])
+        # self.runner.run()
 
     def stop(self):
         """
@@ -78,7 +77,7 @@ def main():
     Initialize the project
     """
     name = 'Scrummie the Scrum Bot'
-    url = environ.get('RASA_URL') or 'http://localhost:5055'
+    url = environ.get('RASA_URL') or 'http://localhost:5005/webhooks/rest/webhook'
     vc = VoiceClient(name, url)
     log_fmt = '%(asctime)-15s %(name)-8s %(message)s'
     logging.basicConfig(format=log_fmt, level=logging.DEBUG)

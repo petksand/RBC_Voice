@@ -23,7 +23,7 @@ class ActionStartMeeting(Action):
     def run(self, dispatcher, tracker, domain):
 
         def _run():
-            say(dispatcher, "Welcome")
+            say(dispatcher, "Oh! You scared me. Welcome to the meeting, my name's Fiona and I'll be your scrum master")
             try:
                 browser.login()
                 browser.navigate_to_active_sprint_board()
