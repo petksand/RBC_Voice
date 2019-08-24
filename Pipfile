@@ -10,6 +10,7 @@ pytest = "*"
 jira = "*"
 python-dotenv = "*"
 selenium = "*"
+rasa = "*"
 
 [requires]
 python_version = "3.7"
