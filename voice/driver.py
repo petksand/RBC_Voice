@@ -7,7 +7,7 @@ controller.login()
 controller.navigate_to_active_sprint_board()
 
 time.sleep(3)
-controller.open_issue_view(f"{settings.JIRA_PROJECT_KEY}-3")
+controller.open_issue_view("3")
 
 time.sleep(2)
 

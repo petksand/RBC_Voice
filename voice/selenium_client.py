@@ -43,7 +43,13 @@ class SeleniumClient:
             f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}"
         )
 
-    def open_issue(self, issue_key: str):
+    def open_issue_view(self, issue_key: str):
+        try:
+            _ = int(issue_key)
+            issue_key = f"{settings.JIRA_PROJECT_KEY}-{issue_key}"
+        except ValueError:
+            pass
+
         # wait until board appears
         self._wait.until(ec.visibility_of_element_located(
             (By.XPATH, "//span[@id=\"subnav-title\"]/span[@class=\"subnavigator-title\"]"))
@@ -52,8 +58,9 @@ class SeleniumClient:
         self._driver.get(
             f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}&modal=detail&selectedIssue={issue_key}"
         )
+        time.sleep(2)
         self._wait.until(
-            ec.visibility_of_element_located((By.CSS_SELECTOR, "#jira-issue-header , span[arial-label=\"Close\"]"))
+            ec.visibility_of_element_located((By.CSS_SELECTOR, "#jira-issue-header, span[arial-label=\"Close\"]"))
         )
 
     def close_issue_view(self):
