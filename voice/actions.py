@@ -99,13 +99,16 @@ class ActionChangeProgress(Action):
             say(dispatcher, "Could not recognize workflow")
         else:
             say(dispatcher, "Changing issue {} to be {}".format(story_id, workflow))
-            def _run():
-                try:
-                    browser.transition_issue(story_id, workflow)
-                except:
-                    pass
+            browser.transition_issue(story_id, workflow)
 
-            asyncio.get_event_loop().run_in_executor(None, _run)
+            # def _run():
+            #     try:
+            #         browser.transition_issue(story_id, workflow)
+            #     except:
+            #         dispatcher.utter_message("HERE")
+            #         pass
+
+            # asyncio.get_event_loop().run_in_executor(None, _run)
 
 
 

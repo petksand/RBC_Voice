@@ -23,6 +23,8 @@
 - let's see number [79](story_id)
 - let's see [9](story_id)
 - let's see story number [09](story_id)
+- view issue [6](story_id)
+- open issue [898](story_id)
 
 ## intent:summarize
 - summarize issue [5784](story_id)
@@ -33,6 +35,7 @@
 - assign [Poulad](names) to issue [67](story_id)
 - assign [Sandra Petkovic](names) to subtask [987](story_id)
 - assign [Joe](names) to story [67](story_id)
+- assign [Joe](names) to [67](story_id)
 - assign [Matt](names) to [456](story_id)
 - assign issue [90](story_id) to [Joe](names)
 - assign [567](story_id) to [Margaret](names)
