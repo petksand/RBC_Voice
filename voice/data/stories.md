@@ -1,4 +1,11 @@
-## happy path
+## story_view_story
+* start
+  - action_start
+* inform_story{"story_id":"1"}
+  - slot{"story_id":"1"}
+  - action_view_story
+
+<!-- ## happy path
 * greet
   - utter_greet
 * mood_great
@@ -24,4 +31,4 @@
 
 ## say goodbye
 * goodbye
-  - utter_goodbye
+  - utter_goodbye -->

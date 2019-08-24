@@ -1,17 +1,10 @@
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
-# See this guide on how to implement these action:
-# https://rasa.com/docs/rasa/core/actions/#custom-actions/
+from typing import Any, Text, Dict, List
 
-# This is a simple example for a custom action which utters "Hello World!"
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
 
-# from typing import Any, Text, Dict, List
-#
-# from rasa_sdk import Action, Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-#
-#
+# from selenium import webdriver
+
 # class ActionHelloWorld(Action):
 #
 #     def name(self) -> Text:
@@ -24,3 +17,28 @@
 #         dispatcher.utter_message("Hello World!")
 #
 #         return []
+
+# browser =  webdriver.Chrome()
+
+
+class ActionStartMeeting(Action):
+    """ Starts meeting and opens browser """
+
+    def name(self):
+        return "action_start"
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message("Welcome")
+        # driver.get("http://www.google.com")
+
+
+class ActionViewStory(Action):
+    """ Views story """
+    
+    def name(self):
+        return "action_view_story"
+
+    def run(self, dispatcher, tracker, domain):
+        story_id = tracker.get_slot('story_id')
+        dispatcher.utter_message(story_id)
+        
