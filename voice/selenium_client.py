@@ -21,6 +21,7 @@ class SeleniumClient:
 
     def login(self):
         self._driver.get("https://id.atlassian.com/login")
+        self._driver.maximize_window()
 
         # enter username
         el_user = self._driver.find_element_by_id("username")
@@ -92,7 +93,6 @@ class SeleniumClient:
 
         self._jira.transition_issue(issue_key, to_status)
         self._driver.refresh()
-
 
     def end(self):
         self._driver.quit()
