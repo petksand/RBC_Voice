@@ -18,7 +18,7 @@ browser = selenium_client.SeleniumClient()
 
 
 class ActionStartMeeting(Action):
-    """ Starts meeting and opens browser """
+    """ Navigates to project board """
 
     def name(self):
         return "action_start"
@@ -30,14 +30,15 @@ class ActionStartMeeting(Action):
             try:
                 browser.login()
                 browser.navigate_to_active_sprint_board()
-                browser.login()
             except:
                 pass
 
+        # to handle a rasa timeout bug
         asyncio.get_event_loop().run_in_executor(None, _run)
 
 
 class ActionOpenBoard(Action):
+    """ Navigate to the board """
 
     def name(self):
         return "action_open_board"
@@ -50,7 +51,7 @@ class ActionOpenBoard(Action):
 
 
 class ActionPrompt(Action):
-    """ Prompts the user """
+    """ Prompts the user with what they'd like to do """
 
     def name(self):
         return "action_prompt"
@@ -60,12 +61,13 @@ class ActionPrompt(Action):
 
 
 class ActionViewStory(Action):
-    """ Views story """
+    """ Opens a given story """
 
     def name(self):
         return "action_view_story"
 
     def run(self, dispatcher, tracker, domain):
+        # verify that all the params are collected
         story_id = tracker.get_slot('story_id')
         if story_id == None:
             say(dispatcher, "Could not recognize issue ID")
@@ -83,7 +85,7 @@ class ActionViewStory(Action):
 
 
 class ActionChangeProgress(Action):
-    """ Changes issue progress """
+    """ Changes a given issue's progress """
 
     def name(self):
         return "action_change_progress"
@@ -97,6 +99,14 @@ class ActionChangeProgress(Action):
             say(dispatcher, "Could not recognize workflow")
         else:
             say(dispatcher, "Changing issue {} to be {}".format(story_id, workflow))
+            def _run():
+                try:
+                    browser.transition_issue(story_id, workflow)
+                except:
+                    pass
+
+            asyncio.get_event_loop().run_in_executor(None, _run)
+
 
 
 class ActionCreateStory(Action):
