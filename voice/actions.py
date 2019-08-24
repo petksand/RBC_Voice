@@ -111,7 +111,7 @@ class ActionCreateStory(Action):
         else:
             say(dispatcher, "Creating new story: {}".format(summary))
             iss_num = browser.create_story(summary)
-            say(dispatcher, f"Alright! story {iss_num} is created.")
+            say(dispatcher, f"Gnarly! story {iss_num} is created.")
 
 
 class ActionCreateSubtask(Action):

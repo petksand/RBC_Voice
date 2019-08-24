@@ -58,6 +58,7 @@
 - open a story for [pipeline deploy](summary)
 - make a new story for [bug fixes](summary)
 - open a story for [fix bugs](summary)
+- create a story for [deployment](summary)
 
 ## intent:create_subtask
 - create a subtask for story [67](story_id) called [deploy to prod](summary)

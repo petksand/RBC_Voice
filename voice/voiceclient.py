@@ -45,7 +45,7 @@ class VoiceClient:
         while self.is_running:
             with sr.Microphone() as source:
                 logging.info('Recording voice...')
-                audio = recog.listen(source=source)
+                audio = recog.listen(source=source, timeout=4, phrase_time_limit=6)
                 logging.info('Recorded voice.')
             try:
                 recorded: str = recog.recognize_google(audio)
