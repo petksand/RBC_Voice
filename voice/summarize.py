@@ -1,9 +1,16 @@
 # Importing All The Necessary Libraries
+import os
+
+# dwnload = 'stopwords'
+# cmd = 'echo -e "import nltk\\nnltk.download({})" | python'.format(dwnload)
+# os.system(cmd)
+os.system("pip3 install nltk")
+os.system("pip3 install path.py")
+
 from nltk.corpus import stopwords
 from nltk.cluster.util import cosine_distance 
 import numpy as np
 import networkx as nx
-import os
 import path
 from functools import reduce
 
@@ -74,7 +81,7 @@ def sentence_similarity(sent1, sent2, stopwords=None):
         vector2[all_words.index(w)] += 1
 
     return levenshtein(vector1, vector2)
-    #return 1 - cosine_distance(vector1, vector2)
+    # return 1 - cosine_distance(vector1, vector2)
 
 
 # Similarity Matrix
@@ -90,12 +97,9 @@ def build_similarity_matrix(sentences, stop_words):
     return similarity_matrix
 
 # Generate Summary Method
-def generate_summary(file_name, top_n=5):
+def generate_summary(sentences, top_n=5):
     stop_words = stopwords.words('english')
     summarize_text = []
-
-    # Step 1 - Read text anc split it
-    sentences = read_article(file_name)
 
     # Step 2 - Generate Similary Martix across sentences
     sentence_similarity_martix = build_similarity_matrix(sentences, stop_words)
@@ -111,12 +115,14 @@ def generate_summary(file_name, top_n=5):
     top_n = len(ranked_sentence) if top_n > len(ranked_sentence) else top_n
     
     for i in range(top_n):
-        summarize_text.append(" ".join(ranked_sentence[i][1]))
+        summarize_text.append("".join(ranked_sentence[i][1]))
 
     # Step 5 - Offcourse, output the summarize text
     print("Summarize Text: \n-", ".\n- ".join(summarize_text))
     print("Done!")
 
 # Generate Summary Method
-cwd = os.getcwd()
-generate_summary(cwd + "\\sample-wiki.txt", 5)
+# cwd = os.getcwd()
+# sentences = "A contextual assistant that goes beyond simple FAQ-style interactions requires more than just an algorithm and a prayer. A conversational assistant needs to have collected important details needed to answer user questions in the right context. Otherwise, no happy path. Simple enough, and known as slot filling. But how do you gather and define the details that matter before taking action, or providing a response? Slot filling is made easy with our new addition of FormPolicy. This is a fresh feature that implements slot filling in an easy and effective way. How? FormPolicy allows you to cover all the happy paths with a single story. Forms also let you alter logic within a happy path, without needing to change the training data. So, how do you implement this new technique? Glad you asked. Here’s how to get FormPolicy working for you."
+# sentences = sentences.split(".")
+# generate_summary(sentences, 5)

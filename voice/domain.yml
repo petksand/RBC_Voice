@@ -10,14 +10,14 @@ slots:
     - done
   summary:
     type: text
-  name:
+  names:
     type: text
 
 entities:
 - story_id
 - workflow
 - summary
-- name
+- names
 
 intents:
 - start
@@ -37,4 +37,3 @@ actions:
 - action_prompt
 - action_summarize
 - action_assign
-

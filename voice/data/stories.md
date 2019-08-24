@@ -29,8 +29,8 @@
   - action_summarize
 
 ## assign_issue
-* assign{"name":"", "story_id":"1"}
-  - slot{"name":null, "story_id":null}
+* assign{"names":"", "story_id":"1"}
+  - slot{"names":null, "story_id":null}
   - action_assign
 
 <!-- ## happy path
