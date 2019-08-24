@@ -1,16 +1,10 @@
 import requests
 import speech_recognition as sr
 import threading
-from typing import Optional, Tuple
+from typing import Optional
 from dotenv import load_dotenv
 import logging
 from os import environ
-
-
-def listen(recog: sr.Recognizer):
-    with sr.Microphone() as source:
-        audio = recog.listen(source=source)
-        return audio
 
 
 class VoiceClient:
@@ -46,19 +40,19 @@ class VoiceClient:
         """
         self.is_running = True
 
-        def _run():
+        def _run(_self: VoiceClient):
             recog = sr.Recognizer()
-            while self.is_running:
+            while _self.is_running:
                 with sr.Microphone() as source:
                     audio = recog.listen(source=source)
                 try:
                     recorded: str = recog.recognize_google(audio)
                     logging.info('Recorded: ' + recorded)
-                    self._send_speech_text(self.url, recorded)
+                    _self._send_speech_text(recorded)
                     return recorded
                 except Exception as e:
                     logging.info(e)
-        self.runner = threading.Thread(target=_run)
+        self.runner = threading.Thread(target=_run, args=[self])
         self.runner.run()
 
     def stop(self):
@@ -76,13 +70,25 @@ class VoiceClient:
                 self.runner = None
 
 
-if __name__ == '__main__':
-    load_dotenv()
-    vc = VoiceClient(
-        'Scrummie the Scrum Bot',
-        environ.get('RASA_URL') or 'http://localhost:5055',
-    )
+def main():
+    """
+    Initialize the project
+    """
+    name = 'Scrummie the Scrum Bot'
+    url = environ.get('RASA_URL') or 'http://localhost:5055'
+    vc = VoiceClient(name, url)
+    log_fmt = '%(asctime)-15s %(name)-8s %(message)s'
+    logging.basicConfig(format=log_fmt, level=logging.DEBUG)
+
+    logging.info('Starting Application:')
+    logging.info('RASA URL: ' + url)
+    logging.info('Bot Name: ' + name)
     try:
         vc.run()
     finally:
         vc.stop()
+
+
+if __name__ == '__main__':
+    load_dotenv()
+    main()
