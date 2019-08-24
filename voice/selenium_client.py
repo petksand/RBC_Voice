@@ -28,12 +28,10 @@ class SeleniumClient:
 
         time.sleep(3)
 
-        return True
-
 
     def navigate_to_active_sprint_board(self, project_key):
         self._driver.get("{}/secure/RapidBoard.jspa?rapidView=1&projectKey={}".format(self._base_url, project_key))
-        return True
+
 
     def open_issue(self, issue_key: str):
         pass

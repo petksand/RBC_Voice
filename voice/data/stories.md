@@ -1,6 +1,7 @@
 ## start_meeting
 * start
   - action_start
+  - action_open_board
   - action_prompt
 
 ## view_story

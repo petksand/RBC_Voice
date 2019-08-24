@@ -12,6 +12,8 @@ from selenium import webdriver
 import selenium_client
 import threading
 
+import asyncio
+
 browser = selenium_client.SeleniumClient()
 
 
@@ -22,16 +24,28 @@ class ActionStartMeeting(Action):
         return "action_start"
 
     def run(self, dispatcher, tracker, domain):
+        
         def _run():
             say(dispatcher, "Welcome")
             try:
                 browser.login("petksand@gmail.com", "Password1")
-                browser.navigate_to_active_sprint_board("WHLNT")
             except:
                 pass
-        thread = threading.Thread(target=_run)
-        thread.run()
+        asyncio.get_event_loop().run_in_executor(None, _run)
+                
 
+class ActionOpenBoard(Action):
+    
+    def name(self):
+        return "action_open_board"
+
+    def run(self, dispatcher, tracke, domain):
+         
+        say(dispatcher, "Navigating to board")
+        browser.navigate_to_active_sprint_board("WHLNT")
+
+        return []
+            
 
 class ActionPrompt(Action):
     """ Prompts the user """
