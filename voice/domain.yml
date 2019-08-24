@@ -1,0 +1,14 @@
+slots:
+  story_id:
+    type: text
+
+entities:
+- story_id
+
+intents:
+- start
+- inform_story
+
+actions:
+- action_start
+- action_view_story
