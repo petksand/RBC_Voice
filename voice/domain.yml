@@ -27,6 +27,7 @@ intents:
 - create_subtask
 - summarize
 - assign
+- end
 
 actions:
 - action_start
@@ -37,3 +38,4 @@ actions:
 - action_prompt
 - action_summarize
 - action_assign
+- action_end

@@ -79,7 +79,6 @@
 - raise
 - risk
 
-
 ## intent:confirm
 - yeah
 - yes
@@ -105,6 +104,7 @@
 - end
 - over
 - stop
+- restart
 
 ## intent:check_balance
 - what is my balance <!-- no entity -->

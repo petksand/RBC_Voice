@@ -26,10 +26,12 @@ class ActionStartMeeting(Action):
             say(dispatcher, "Welcome")
             try:
                 browser.login("petksand@gmail.com", "Password1")
+                browser.navigate_to_active_sprint_board("WHLNT")
             except:
                 pass
         thread = threading.Thread(target=_run)
         thread.run()
+
 
 class ActionPrompt(Action):
     """ Prompts the user """
@@ -136,3 +138,14 @@ class ActionAssign(Action):
             say(dispatcher, "Could not recognize name")
         else:
             say(dispatcher, "Assigning issue {} to {}".format(story_id, names))
+
+
+class ActionEnd(Action):
+
+    def name(self):
+        return "action_end"
+
+    def run(self, dispatcher, tracker, domain):
+        say(dispatcher, "Quitting web browser")
+        browser.end()
+        return []

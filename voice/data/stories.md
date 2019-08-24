@@ -33,6 +33,10 @@
   - slot{"names":null, "story_id":null}
   - action_assign
 
+## restart
+* end
+  - action_end
+
 <!-- ## happy path
 * greet
   - utter_greet
