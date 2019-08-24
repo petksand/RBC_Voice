@@ -9,6 +9,7 @@ pytest = "*"
 [packages]
 rasa = "*"
 python-dotenv = "*"
+jira = "*"
 
 [requires]
 python_version = "3.7"

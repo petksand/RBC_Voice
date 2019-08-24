@@ -7,3 +7,5 @@ controller.login()
 controller.navigate_to_active_sprint_board()
 time.sleep(3)
 controller.open_issue(f"{settings.JIRA_PROJECT_KEY}-3")
+
+controller.assign_issue_to_user(f"{settings.JIRA_PROJECT_KEY}-3", "Poulad")

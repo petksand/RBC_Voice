@@ -1,5 +1,6 @@
 import time
 
+from jira import JIRA
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 
@@ -8,9 +9,11 @@ import settings
 
 class SeleniumClient:
     _driver: WebDriver
+    _jira: JIRA
 
     def __init__(self):
         self._driver = webdriver.Chrome()
+        _jira = JIRA(server=settings.JIRA_BASE_URL, basic_auth=(settings.JIRA_USERNAME, settings.JIRA_TOKEN))
 
     def login(self):
         self._driver.get("https://id.atlassian.com/login")
@@ -38,3 +41,7 @@ class SeleniumClient:
         self._driver.get(
             f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}&modal=detail&selectedIssue={issue_key}"
         )
+
+    def assign_issue_to_user(self, issue_key: str, username: str):
+        prj = self._jira.project(settings.JIRA_PROJECT_KEY)
+        return prj

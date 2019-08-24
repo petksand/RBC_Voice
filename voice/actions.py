@@ -25,10 +25,11 @@ class ActionStartMeeting(Action):
         def _run():
             say(dispatcher, "Welcome")
             try:
-                browser.login("petksand@gmail.com", "Password1")
-                browser.navigate_to_active_sprint_board("WHLNT")
+                browser.login()
+                browser.navigate_to_active_sprint_board()
             except:
                 pass
+
         thread = threading.Thread(target=_run)
         thread.run()
 
@@ -45,7 +46,7 @@ class ActionPrompt(Action):
 
 class ActionViewStory(Action):
     """ Views story """
-    
+
     def name(self):
         return "action_view_story"
 
@@ -55,7 +56,8 @@ class ActionViewStory(Action):
             say(dispatcher, "Could not recognize issue ID")
         else:
             say(dispatcher, "Viewing issue {}".format(story_id))
-        
+
+
 class ActionChangeProgress(Action):
     """ Changes issue progress """
 
@@ -132,12 +134,13 @@ class ActionAssign(Action):
     def run(self, dispatcher, tracker, domain):
         names = tracker.get_slot("names")
         story_id = tracker.get_slot("story_id")
-        if story_id == None:
+        if story_id is None:
             say(dispatcher, "Could not recognize story ID")
-        elif names == None:
+        elif names is None:
             say(dispatcher, "Could not recognize name")
         else:
             say(dispatcher, "Assigning issue {} to {}".format(story_id, names))
+            browser.assign_issue_to_user(story_id, names)
 
 
 class ActionEnd(Action):
