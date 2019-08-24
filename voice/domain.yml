@@ -1,14 +1,32 @@
 slots:
   story_id:
     type: text
+  workflow:
+    type: categorical
+    values:
+    - backlog
+    - to do
+    - in progress
+    - done
+  summary:
+    type: text
 
 entities:
 - story_id
+- workflow
+- summary
 
 intents:
 - start
 - inform_story
+- change_workflow
+- create_story
+- create_subtask
 
 actions:
 - action_start
 - action_view_story
+- action_change_progress
+- action_create_story
+- action_create_subtask
+- action_prompt

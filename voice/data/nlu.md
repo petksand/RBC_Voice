@@ -9,15 +9,6 @@
 - let's start
 - let's go
 
-## intent:create
-- create
-- new
-- open
-
-## intent:close
-- close
-- finish
-
 ## intent:inform_story
 - look at story [1](story_id)
 - open story [34](story_id)
@@ -26,6 +17,40 @@
 - open story number [12345](story_id)
 - let's see number [79](story_id)
 - let's see [9](story_id)
+- let's see story number [09](story_id)
+
+## intent:change_workflow
+- put [23](story_id) [in progress](workflow)
+- put [299](story_id) in [in progress](workflow)
+- change [390](story_id) to [backlog](workflow)
+- move [1](story_id) to [done](workflow)
+- move [16](story_id) to [to do](workflow)
+
+## intent:create_story
+- create a new story for [deployment](summary)
+- make a new story for [deploy to prod](summary)
+- open a story for [pipeline deploy](summary)
+- make a new story for [bug fixes](summary)
+- open a story for [fix bugs](summary)
+
+## intent:create_subtask
+- create a subtask for story [67](story_id) called [deploy to prod](summary)
+- open a subtask under [456](story_id) for [code review](summary)
+- create a new subtask for [98](story_id) for [bug fixes](summary)
+- create a subtask for story [67](story_id) called [fixing bugs](summary)
+- open a subtask under [456](story_id) for [SAI deployment](summary)
+- create a new subtask for [98](story_id) for [reviewing code](summary)
+
+## synonyms:summary
+- deployment
+- bugs
+- reviewing code
+- code review
+- fixing bugs
+- deploy to prod
+- deploy to sai
+- deploy to dev
+- deployment
 
 ## intent:risk
 - raise
@@ -71,3 +96,4 @@
 - goodbye
 - see you around
 - see you later
+- 

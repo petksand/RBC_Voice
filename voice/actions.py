@@ -1,24 +1,8 @@
 from typing import Any, Text, Dict, List
-
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-
+from Exceptions import UnrecognizedInputException
 # from selenium import webdriver
-
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message("Hello World!")
-#
-#         return []
-
-# browser =  webdriver.Chrome()
 
 
 class ActionStartMeeting(Action):
@@ -32,6 +16,16 @@ class ActionStartMeeting(Action):
         # driver.get("http://www.google.com")
 
 
+class ActionPrompt(Action):
+    """ Prompts the user """
+
+    def name(self):
+        return "action_prompt"
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message("What would you like to do?")
+
+
 class ActionViewStory(Action):
     """ Views story """
     
@@ -40,5 +34,54 @@ class ActionViewStory(Action):
 
     def run(self, dispatcher, tracker, domain):
         story_id = tracker.get_slot('story_id')
-        dispatcher.utter_message(story_id)
+        if story_id == None:
+            dispatcher.utter_message("Could recognize issue ID")
+        else:
+            dispatcher.utter_message("Viewing issue {}".format(story_id))
         
+class ActionChangeProgress(Action):
+    """ Changes issue progress """
+
+    def name(self):
+        return "action_change_progress"
+
+    def run(self, dispatcher, tracker, domain):
+        story_id = tracker.get_slot('story_id')
+        workflow = tracker.get_slot('workflow')
+        if story_id == None:
+            dispatcher.utter_message("Could not recognize issue ID")
+        elif workflow == None:
+            dispatcher.utter_message("Could not recognize workflow")
+        else:
+            dispatcher.utter_message("Changing issue {} to be {}".format(story_id, workflow))
+
+
+class ActionCreateStory(Action):
+    """ Creates a new story in a board """
+
+    def name(self):
+        return "action_create_story"
+
+    def run(self, dispatcher, tracker, domain):
+        summary = tracker.get_slot('summary')
+        if summary == None:
+            dispatcher.utter_message("Could not recognize summary")
+        else:
+            dispatcher.utter_message("Creating new story: {}".format(summary))
+
+
+class ActionCreateSubtask(Action):
+    """ Creatas a new subtask under a given story """
+
+    def name(self):
+        return "action_create_subtask"
+
+    def run(self, dispatcher, tracker, domain):
+        story_id = tracker.get_slot('story_id')
+        summary = tracker.get_slot("summary")
+        if story_id == None:
+            dispatcher.utter_message("Could not recognize issue ID")
+        elif summary == None:
+            dispatcher.utter_message("Could not recongnize summary")
+        else:
+            dispatcher.utter_message("Creating a new subtask under {}: {}".format(story_id, summary))
