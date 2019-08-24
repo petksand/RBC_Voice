@@ -8,6 +8,11 @@
 - let's get started
 - let's start
 - let's go
+- start
+- begin
+- begin session
+- start session
+- initiate automated scrum session
 
 ## intent:inform_story
 - look at story [1](story_id)
@@ -32,8 +37,6 @@
 
 ## lookup:name
 ../names.txt
-
-
 
 ## intent:change_workflow
 - put [23](story_id) [in progress](workflow)
@@ -72,6 +75,7 @@
 - raise
 - risk
 
+
 ## intent:confirm
 - yeah
 - yes
@@ -80,6 +84,8 @@
 - of course
 - that sounds good
 - correct
+- absolutely
+- yuh
 
 ## intent:deny
 - no
@@ -94,6 +100,7 @@
 - goodbye
 - end
 - over
+- stop
 
 ## intent:check_balance
 - what is my balance <!-- no entity -->
@@ -112,4 +119,4 @@
 - goodbye
 - see you around
 - see you later
-- 
+- goodnight
