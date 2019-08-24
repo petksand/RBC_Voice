@@ -19,6 +19,22 @@
 - let's see [9](story_id)
 - let's see story number [09](story_id)
 
+## intent:summarize
+- summarize issue [5784](story_id)
+- summarize story [44](story_id)
+- summarize subtask [3](story_id)
+
+## intent:assign
+- assign [Poulad](name) to issue [67](story_id)
+- assign [Sandra](name) to subtask [987](story_id)
+- assign [Joe](name) to story [67](story_id)
+- assign [Matt](name) to [456](story_id)
+
+## lookup:name
+../names.txt
+
+
+
 ## intent:change_workflow
 - put [23](story_id) [in progress](workflow)
 - put [299](story_id) in [in progress](workflow)
