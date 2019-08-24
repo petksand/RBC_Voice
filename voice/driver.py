@@ -7,7 +7,7 @@ controller.login()
 controller.navigate_to_active_sprint_board()
 
 time.sleep(3)
-controller.open_issue(f"{settings.JIRA_PROJECT_KEY}-3")
+controller.open_issue_view(f"{settings.JIRA_PROJECT_KEY}-3")
 
 time.sleep(2)
 
@@ -21,4 +21,5 @@ time.sleep(1)
 
 controller.transition_issue(f"{settings.JIRA_PROJECT_KEY}-5", "done")
 time.sleep(2)
+
 controller.transition_issue(f"{settings.JIRA_PROJECT_KEY}-5", "in progress")

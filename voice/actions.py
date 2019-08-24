@@ -74,12 +74,12 @@ class ActionViewStory(Action):
 
                 say(dispatcher, "Viewing issue {}".format(story_id))
             try:
-                browser.open_issue(story_id)
+                browser.open_issue_view(story_id)
             except:
                 pass
 
         asyncio.get_event_loop().run_in_executor(None, _run)
-        browser.open_issue(story_id)
+        browser.open_issue_view(story_id)
 
 
 class ActionChangeProgress(Action):
