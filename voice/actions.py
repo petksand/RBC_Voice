@@ -1,16 +1,13 @@
-from typing import Any, Text, Dict, List
-from rasa_sdk import Action, Tracker
-from rasa_sdk.executor import CollectingDispatcher
-
-from summarize import generate_summary, read_article
 import os
+
+from rasa_sdk import Action
+
 from commands import say
+from summarize import generate_summary
 
 os.system("pip3 install selenium")
 
-from selenium import webdriver
 import selenium_client
-import threading
 
 import asyncio
 
@@ -74,6 +71,7 @@ class ActionViewStory(Action):
         else:
             def _run():
                 say(dispatcher, "Viewing issue {}".format(story_id))
+
             try:
                 browser.open_issue_view(story_id)
             except:
@@ -98,16 +96,6 @@ class ActionChangeProgress(Action):
         else:
             say(dispatcher, "Changing issue {} to be {}".format(story_id, workflow))
             browser.transition_issue(story_id, workflow)
-
-            # def _run():
-            #     try:
-            #         browser.transition_issue(story_id, workflow)
-            #     except:
-            #         dispatcher.utter_message("HERE")
-            #         pass
-
-            # asyncio.get_event_loop().run_in_executor(None, _run)
-
 
 
 class ActionCreateStory(Action):
