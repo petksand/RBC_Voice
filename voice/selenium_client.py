@@ -42,6 +42,10 @@ class SeleniumClient:
             f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}&modal=detail&selectedIssue={issue_key}"
         )
 
+    def close_issue_view(self):
+        el = self._driver.find_element_by_css_selector("span[aria-label=\"Close\"]")
+        el.click()
+
     def assign_issue_to_user(self, issue_key: str, username: str):
         prj = self._jira.project(settings.JIRA_PROJECT_KEY)
         users = self._jira.search_users(username)
@@ -53,3 +57,7 @@ class SeleniumClient:
 
         self._jira.assign_issue(issue_key, u.name)
         self._driver.refresh()
+
+    def transition_issue(self, issue_key: str, to_status: str):
+        res = self._jira.transition_issue(issue_key, to_status)
+        return res
