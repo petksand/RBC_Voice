@@ -70,7 +70,6 @@ class ActionViewStory(Action):
             say(dispatcher, "Could not recognize issue ID")
         else:
             def _run():
-
                 say(dispatcher, "Viewing issue {}".format(story_id))
 
             try:
@@ -79,7 +78,6 @@ class ActionViewStory(Action):
                 pass
 
         asyncio.get_event_loop().run_in_executor(None, _run)
-        browser.open_issue_view(story_id)
 
 
 class ActionChangeProgress(Action):
@@ -97,14 +95,7 @@ class ActionChangeProgress(Action):
             say(dispatcher, "Could not recognize workflow")
         else:
             say(dispatcher, "Changing issue {} to be {}".format(story_id, workflow))
-
-            def _run():
-                try:
-                    browser.transition_issue(story_id, workflow)
-                except:
-                    pass
-
-            asyncio.get_event_loop().run_in_executor(None, _run)
+            browser.transition_issue(story_id, workflow)
 
 
 class ActionCreateStory(Action):

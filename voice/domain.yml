@@ -40,3 +40,4 @@ actions:
 - action_assign
 - action_end
 - action_open_board
+- action_close_window
