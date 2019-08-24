@@ -17,19 +17,18 @@ class VoiceClient:
     """
     Voice client to take in voice and output to Rasa.
     """
-    def __init__(self, sender_name: str, url: str, credentials: Tuple[str, str]):
+    def __init__(self, sender_name: str, url: str):
         """
         :param sender_name: The name of the sender used for this session.
         """
         self.sender_name = sender_name
         self.url = url
-        self.credentials = credentials
 
         self.is_running: bool = False
         self.runner: Optional[threading.Thread] = None
 
     def _send_speech_text(self, message: str):
-        resp = requests.get(self.url, auth=self.credentials, data={
+        resp = requests.get(self.url, data={
             'sender': self.sender_name,
             'message': message
         })
@@ -82,7 +81,6 @@ if __name__ == '__main__':
     vc = VoiceClient(
         'Scrummie the Scrum Bot',
         environ.get('RASA_URL') or 'http://localhost:5055',
-        (environ['JIRA_USERNAME'], environ['JIRA_TOKEN'])
     )
     try:
         vc.run()
