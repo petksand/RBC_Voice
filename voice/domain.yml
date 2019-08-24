@@ -10,11 +10,14 @@ slots:
     - done
   summary:
     type: text
+  name:
+    type: text
 
 entities:
 - story_id
 - workflow
 - summary
+- name
 
 intents:
 - start
@@ -22,6 +25,8 @@ intents:
 - change_workflow
 - create_story
 - create_subtask
+- summarize
+- assign
 
 actions:
 - action_start
@@ -30,3 +35,6 @@ actions:
 - action_create_story
 - action_create_subtask
 - action_prompt
+- action_summarize
+- action_assign
+

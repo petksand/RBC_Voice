@@ -77,7 +77,7 @@ class ActionCreateSubtask(Action):
         return "action_create_subtask"
 
     def run(self, dispatcher, tracker, domain):
-        story_id = tracker.get_slot('story_id')
+        story_id = tracker.get_slot("story_id")
         summary = tracker.get_slot("summary")
         if story_id == None:
             dispatcher.utter_message("Could not recognize issue ID")
@@ -85,3 +85,34 @@ class ActionCreateSubtask(Action):
             dispatcher.utter_message("Could not recongnize summary")
         else:
             dispatcher.utter_message("Creating a new subtask under {}: {}".format(story_id, summary))
+
+
+class ActionSummarize(Action):
+    """ Summarizes the description in a JIRA issue """
+
+    def name(self):
+        return "action_summarize"
+
+    def run(self, dispatcher, tracker, domain):
+        story_id = tracker.get_slot("story_id")
+        if story_id == None:
+            dispatcher.utter_message("Could not recognize issue ID")
+        else:
+            dispatcher.utter_message("Summarize issue {}".format(story_id))
+
+
+class ActionAssign(Action):
+    """ Assigns an issue to a user """
+
+    def name(self):
+        return "action_assign"
+
+    def run(self, dispatcher, tracker, domain):
+        name = tracker.get_slot("name")
+        story_id = tracker.get_slot("story_id")
+        if story_id == None:
+            dispatcher.utter_message("Could not recognize story ID")
+        elif name == None:
+            dispatcher.utter_message("Could not recognize name")
+        else:
+            dispatcher.utter_message("Assigning issue {} to {}".format(story_id, name))

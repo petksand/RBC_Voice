@@ -2,31 +2,36 @@
 * start
   - action_start
   - action_prompt
-<!-- > progress_from_start -->
 
 ## view_story
-<!-- > progress_from_start -->
 * inform_story{"story_id":null}
   - slot{"story_id":"1"}
   - action_view_story
 
 ## change_workflow
-<!-- > progress_from_start -->
 * change_workflow{"story_id":"1","workflow":"backlog"}
   - slot{"workflow":null, "story_id":null}
   - action_change_progress
 
 ## create_story 
-<!-- > progress_from_start -->
 * create_story{"summary":""}
   - slot{"summary":null}
   - action_create_story
 
 ## create_subtask
-<!-- > progress_from_start -->
 * create_subtask{"story_id":"1","summary":""}
   - slot{"summary":null, "story_id":null}
   - action_create_subtask
+
+## get_summary
+* summarize{"story_id":"1"}
+  - slot{"story_id":null}
+  - action_summarize
+
+## assign_issue
+* assign{"name":"", "story_id":"1"}
+  - slot{"name":null, "story_id":null}
+  - action_assign
 
 <!-- ## happy path
 * greet
