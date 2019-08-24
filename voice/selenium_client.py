@@ -1,14 +1,11 @@
-import time
-
 from jira import JIRA, User
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.ui import WebDriverWait
 
 import settings
-
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 
 driver = webdriver.Chrome()
 driver.maximize_window()
@@ -24,7 +21,6 @@ class SeleniumClient:
     def __init__(self):
         self._driver = webdriver.Chrome()
         self._jira = JIRA(server=settings.JIRA_BASE_URL, basic_auth=(settings.JIRA_USERNAME, settings.JIRA_TOKEN))
-
 
     def login(self):
         self._driver.get("https://id.atlassian.com/login")
@@ -44,17 +40,16 @@ class SeleniumClient:
         # click to login
         el_btn.click()
 
-
     def navigate_to_active_sprint_board(self):
         # navigate to project board
         self._driver.get(
             f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}"
         )
 
-
     def open_issue(self, issue_key: str):
         # wait until board appears
-        board = wait.until(ec.visibility_of_element_located((By.XPATH, "//span[@id="subnav-title"]/span[@class="subnavigator-title"]")))
+        board = wait.until(ec.visibility_of_element_located(
+            (By.XPATH, "//span[@id="subnav-title"]/span[@class="subnavigator-title"]")))
         # view issue
         self._driver.get(
             f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}&modal=detail&selectedIssue={issue_key}"
@@ -64,10 +59,14 @@ class SeleniumClient:
         #     # close window after 4 seconds
         #     close_btn = self._driver.find_element_by_xpath('//span[@aria-label="Close"]')
 
+    def close_issue_view(self):
+        el = self._driver.find_element_by_css_selector("span[aria-label=\"Close\"]")
+        el.click()
 
     def assign_issue_to_user(self, issue_key: str, username: str):
         # open issue if not already open
-        if not self._driver.find_element_by_xpath('//span[@class="css-eaycls"][text()="{}-{}"]'.format(settings.JIRA_PROJECT_KEY, issue_key)):
+        if not self._driver.find_element_by_xpath(
+                '//span[@class="css-eaycls"][text()="{}-{}"]'.format(settings.JIRA_PROJECT_KEY, issue_key)):
             self.open_issue(issue_key, close=False)
         # assign given issue to given user
         prj = self._jira.project(settings.JIRA_PROJECT_KEY)
@@ -85,3 +84,6 @@ class SeleniumClient:
         # # close window after 4 seconds
         # close_btn = self._driver.find_element_by_xpath('//span[@aria-label="Close"]')
 
+    def transition_issue(self, issue_key: str, to_status: str):
+        res = self._jira.transition_issue(issue_key, to_status)
+        return res
