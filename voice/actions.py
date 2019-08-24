@@ -1,8 +1,5 @@
-from typing import Any, Text, Dict, List
-from rasa_sdk import Action, Tracker
-from rasa_sdk.executor import CollectingDispatcher
-from Exceptions import UnrecognizedInputException
-# from selenium import webdriver
+from rasa_sdk import Action
+from selenium_context import SeleniumContext
 
 
 class ActionStartMeeting(Action):
@@ -13,7 +10,9 @@ class ActionStartMeeting(Action):
 
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_message("Welcome")
-        # driver.get("http://www.google.com")
+        ctx = SeleniumContext.get_instance()
+        ctx.login()
+        ctx.navigate_to_active_sprint_board()
 
 
 class ActionPrompt(Action):
@@ -28,7 +27,7 @@ class ActionPrompt(Action):
 
 class ActionViewStory(Action):
     """ Views story """
-    
+
     def name(self):
         return "action_view_story"
 
@@ -38,7 +37,8 @@ class ActionViewStory(Action):
             dispatcher.utter_message("Could recognize issue ID")
         else:
             dispatcher.utter_message("Viewing issue {}".format(story_id))
-        
+
+
 class ActionChangeProgress(Action):
     """ Changes issue progress """
 
