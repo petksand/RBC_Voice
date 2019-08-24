@@ -22,6 +22,7 @@ class VoiceClient:
         self.runner: Optional[threading.Thread] = None
 
     def _send_speech_text(self, message: str):
+        print('sending speech')
         resp = requests.get(self.url, data={
             'sender': self.sender_name,
             'message': message
@@ -44,7 +45,9 @@ class VoiceClient:
             recog = sr.Recognizer()
             while _self.is_running:
                 with sr.Microphone() as source:
+                    logging.info('Recording voice...')
                     audio = recog.listen(source=source)
+                    logging.info('Recorded voice.')
                 try:
                     recorded: str = recog.recognize_google(audio)
                     logging.info('Recorded: ' + recorded)
