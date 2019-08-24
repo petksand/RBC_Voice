@@ -5,7 +5,14 @@ from rasa_sdk.executor import CollectingDispatcher
 from summarize import generate_summary, read_article
 import os
 from commands import say
-# from selenium import webdriver
+
+os.system("pip3 install selenium")
+
+from selenium import webdriver
+import selenium_client
+import threading
+
+browser = selenium_client.SeleniumClient()
 
 
 class ActionStartMeeting(Action):
@@ -15,9 +22,14 @@ class ActionStartMeeting(Action):
         return "action_start"
 
     def run(self, dispatcher, tracker, domain):
-        say(dispatcher, "Welcome")
-        # driver.get("http://www.google.com")
-
+        def _run():
+            say(dispatcher, "Welcome")
+            try:
+                browser.login("petksand@gmail.com", "Password1")
+            except:
+                pass
+        thread = threading.Thread(target=_run)
+        thread.run()
 
 class ActionPrompt(Action):
     """ Prompts the user """

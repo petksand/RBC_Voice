@@ -1,6 +1,5 @@
 import os
 
-
 def say(dispatcher, text):
     """
     Runs os "say" command

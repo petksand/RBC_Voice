@@ -37,8 +37,6 @@
 <!-- ## lookup:names
 ../names.txt -->
 
-
-
 ## intent:change_workflow
 - put [23](story_id) [in progress](workflow)
 - put [299](story_id) in [in progress](workflow)
