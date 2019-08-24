@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 
 class SeleniumClient:
     _driver: WebDriver
+    _base_url = "https://whole-note.atlassian.net"
 
     def __init__(self):
         self._driver = webdriver.Chrome()
@@ -27,10 +28,15 @@ class SeleniumClient:
 
         time.sleep(3)
 
-    def navigate_to_active_sprint_board(self):
-        self._driver.get(
-            f"{settings.JIRA_BASE_URL}/secure/RapidBoard.jspa?rapidView=1&projectKey={settings.JIRA_PROJECT_KEY}"
-        )
+        return True
+
+
+    def navigate_to_active_sprint_board(self, project_key):
+        self._driver.get("{}/secure/RapidBoard.jspa?rapidView=1&projectKey={}".format(self._base_url, project_key))
+        return True
 
     def open_issue(self, issue_key: str):
         pass
+
+    def end(self):
+        self._driver.quit()

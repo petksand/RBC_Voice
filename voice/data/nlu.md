@@ -96,6 +96,7 @@
 - goodbye
 - end
 - over
+- restart
 
 ## intent:check_balance
 - what is my balance <!-- no entity -->
