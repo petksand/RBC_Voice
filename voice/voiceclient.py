@@ -22,7 +22,7 @@ class VoiceClient:
         self.runner: Optional[threading.Thread] = None
 
     def _send_speech_text(self, message: str):
-        resp = requests.get(self.url, data={
+        resp = requests.post(self.url, data={
             'sender': self.sender_name,
             'message': message
         })
@@ -75,7 +75,7 @@ def main():
     Initialize the project
     """
     name = 'Scrummie the Scrum Bot'
-    url = environ.get('RASA_URL') or 'http://localhost:5055'
+    url = environ.get('RASA_URL') or 'http://localhost:5005'
     vc = VoiceClient(name, url)
     log_fmt = '%(asctime)-15s %(name)-8s %(message)s'
     logging.basicConfig(format=log_fmt, level=logging.DEBUG)
