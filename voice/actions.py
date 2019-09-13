@@ -1,14 +1,8 @@
 import os
-
 from rasa_sdk import Action
-
 from commands import say
 from summarize import generate_summary
-
-os.system("pip3 install selenium")
-
 import selenium_client
-
 import asyncio
 
 browser = selenium_client.SeleniumClient()
