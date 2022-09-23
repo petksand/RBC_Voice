@@ -61,7 +61,7 @@ packaging==19.1
 pbr==5.4.2
 pika==1.0.1
 prompt-toolkit==2.0.9
-protobuf==3.9.1
+protobuf==3.18.3
 pycparser==2.19
 pydot==1.4.1
 pyjwt==1.7.1
